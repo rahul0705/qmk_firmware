@@ -1,4 +1,11 @@
 #include QMK_KEYBOARD_H
+#include "process_unicode.h"
+
+enum ctrl_layers {
+    _LOCKED,
+    _BASE,
+    _FUNCTION,
+};
 
 enum ctrl_keycodes {
     L_BRI = SAFE_RANGE, //LED Brightness Increase
@@ -20,14 +27,17 @@ enum ctrl_keycodes {
     DBG_KBD,            //DEBUG Toggle Keyboard Prints
     DBG_MOU,            //DEBUG Toggle Mouse Prints
     MD_BOOT,            //Restart into bootloader after hold timeout
+    UC_SHRG,            //Shrug - ¯\_(ツ)_/¯
 };
+
+const uint32_t PROGMEM unicode_map[] = {};
 
 #define TG_NKRO MAGIC_TOGGLE_NKRO //Toggle 6KRO / NKRO mode
 
 keymap_config_t keymap_config;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Layer0
+/* Locked Layer
  * ,------------------------------------------------------------------------------------------------------------------------.
  * | NOOP |      | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | | NOOP | NOOP | NOOP |
  * |------+      +------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
@@ -42,18 +52,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |    NOOP     | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP | NOOP |    NOOP     |        | NOOP |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
  * | NOOP | NOOP | NOOP |                      Space                     | NOOP | NOOP | NOOP | NOOP | | NOOP | NOOP | NOOP |
- * `-------------------------------------------------------------------------------------------------- ---------------------'
+ * `------------------------------------------------------------------------------------------------------------------------'
  */
-
-    [0] = LAYOUT(
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,              KC_NO,   KC_NO,   KC_NO,   \
+    [_LOCKED] = LAYOUT(
+        UC_SHRG, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,              KC_NO,   KC_NO,   KC_NO,   \
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,     KC_NO,   KC_NO,   KC_NO,   \
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_R,    KC_NO,   KC_NO,   KC_U,    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   TO(1),     KC_NO,   KC_NO,   KC_NO,   \
         KC_NO,   KC_A,    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_H,    KC_NO,   KC_NO,   KC_L,    KC_NO,   KC_NO,   KC_ENT, \
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   TG_NKRO, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                                KC_NO,   \
-        KC_NO,   KC_NO,   KC_NO,                     KC_SPC,                             KC_NO,   KC_NO,   KC_NO,   KC_NO,              KC_NO,   KC_NO,   KC_NO   \
+        KC_NO,   UC_M_OS, KC_NO,                     KC_SPC,                             KC_NO,   KC_NO,   KC_NO,   KC_NO,              KC_NO,   KC_NO,   KC_NO   \
     ),
-/* Layer1
+/* Base Layer
  * ,------------------------------------------------------------------------------------------------------------------------.
  * | Esc  |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | | Print| Scrlk| Pause|
  * |------+      +------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
@@ -68,10 +77,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |    Shift    |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |    Shift    |        |  Up  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
  * | Ctrl | Meta | Alt  |                      Space                     | Alt  | MO(0)|  GUI | Ctrl | | Left | Down |Right |
- * `-------------------------------------------------------------------------------------------------- ---------------------'
+ * `------------------------------------------------------------------------------------------------------------------------'
  */
-
-    [1] = LAYOUT(
+    [_BASE] = LAYOUT(
         KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,             KC_PSCR, KC_SLCK, KC_PAUS, \
         KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,   KC_INS,  KC_HOME, KC_PGUP, \
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,   KC_DEL,  KC_END,  KC_PGDN, \
@@ -79,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,                              KC_UP, \
         KC_LCTL, KC_LGUI, KC_LALT,                   KC_SPC,                             KC_RALT, MO(2),   KC_APP,  KC_RCTL,            KC_LEFT, KC_DOWN, KC_RGHT \
     ),
-/* Layer2
+/* Function Layer
  * ,------------------------------------------------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |      |      | |      |      |      |
  * |------+      +------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
@@ -94,9 +102,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |             |      |      |      |      |      |      |      |      |      |      |             |        |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
  * |      |      |      |                                                |      |      |      |      | |      |      |      |
- * `-------------------------------------------------------------------------------------------------- ---------------------'
+ * `------------------------------------------------------------------------------------------------------------------------'
  */
-    [2] = LAYOUT(
+    [_FUNCTION] = LAYOUT(
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,            KC_MUTE, KC_TRNS, KC_TRNS, \
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TO(0),     KC_MPLY, KC_MSTP, KC_VOLU, \
         L_T_BR,  L_PSD,   L_BRI,   L_PSI,   KC_TRNS, KC_TRNS, KC_TRNS, U_T_AUTO,U_T_AGCR,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_MPRV, KC_MNXT, KC_VOLD, \
@@ -119,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      K      |   K  |   K  |   K  |   K  |   K  |   K  |   K  |   K  |   K  |   K  |      K      |        |   K  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
  * |   K  |   K  |   K  |                        K                       |   K  |   K  |   K  |   K  | |   K  |   K  |   K  |
- * `-------------------------------------------------------------------------------------------------- ---------------------'
+ * `------------------------------------------------------------------------------------------------------------------------'
  */
     /*
     [X] = LAYOUT(
@@ -264,6 +272,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
+	case UC_SHRG:
+	    if (record->event.pressed) {
+                send_unicode_hex_string("00AF 005C 005F 0028 30C4 0029 005F 002F 00AF");
+	    }
+	    return false;
         default:
             return true; //Process all other keycodes normally
     }
