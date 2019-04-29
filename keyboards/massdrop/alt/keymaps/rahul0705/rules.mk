@@ -34,6 +34,7 @@ AUTO_SHIFT_ENABLE = no      # Auto Shift
 
 # Custom RGB matrix handling
 RGB_MATRIX_ENABLE = custom
+RGB_MATRIX_CUSTOM_USER = yes
 
 # Allow UNICODE
 UNICODEMAP_ENABLE = yes

@@ -123,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
     rgb_matrix_config.speed = UINT8_MAX/20;
-    rgb_matrix_mode(RGB_MATRIX_CYCLE_UP_DOWN);
+    rgb_matrix_mode(RGB_MATRIX_CUSTOM_double_rainbow);
 };
 
 // Runs constantly in the background, in a loop.
@@ -146,7 +146,7 @@ uint32_t layer_state_set_user(uint32_t state){
             break;
         default:
             rgb_matrix_config.speed = UINT8_MAX/20;
-            rgb_matrix_mode(RGB_MATRIX_CYCLE_UP_DOWN);
+            rgb_matrix_mode(RGB_MATRIX_CUSTOM_double_rainbow);
             break;
     }
     return state;
