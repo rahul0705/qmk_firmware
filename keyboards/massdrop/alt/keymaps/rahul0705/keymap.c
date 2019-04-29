@@ -19,6 +19,7 @@ enum alt_keycodes {
     KC_RHL,                //Rahul
     SHRUG,                 //Shrug
     ANGRY,                 //Angry
+    WIDETXT,               //w i d e t e x t   f o r   a   w i d e   b o y
 };
 
 enum unicode_names {
@@ -84,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------+--------------------|
  * | Shift|      |      |      |      |      |      |      |      |      | SHRUG|    Shift    |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |                                                |      |      |      |      |      |
+ * |      |      |      |                     WIDETXT                    |      |      |      |      |      |
  * `--------------------------------------------------------------------------------------------------------'
  */
     [EMJI] = LAYOUT(
@@ -92,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, \
         KC_TRNS, KC_TRNS, X(POOP), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, \
         KC_LSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, SHRUG,   KC_RSFT,          KC_TRNS, KC_TRNS, \
-        KC_TRNS, UC_M_WC, KC_TRNS,                            KC_TRNS,                            KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS  \
+        KC_TRNS, UC_M_WC, KC_TRNS,                            WIDETXT,                            KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS  \
     ),
 
 /* Layer
@@ -153,6 +154,34 @@ uint32_t layer_state_set_user(uint32_t state){
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint32_t key_timer;
+
+    static struct {
+        bool on;
+        bool first;
+    } w_i_d_e_t_e_x_t = {false, false};
+
+    //borrowed from daniel5151, check his repo out for awesome changes
+    //https://github.com/daniel5151/qmk_firmware
+    if (w_i_d_e_t_e_x_t.on) {
+        if (record->event.pressed) {
+            switch (keycode) {
+                case KC_A...KC_0:
+                case KC_SPC:
+                    if (w_i_d_e_t_e_x_t.first) {
+                        w_i_d_e_t_e_x_t.first = false;
+                    } else {
+                        send_char(' ');
+                    }
+                    break;
+                case KC_ENT:
+                    w_i_d_e_t_e_x_t.first = true;
+                    break;
+                case KC_BSPC:
+                    send_char('\b'); // backspace
+                    break;
+            }
+        }
+    }
 
     switch (keycode) {
         case U_T_AUTO:
@@ -215,6 +244,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else {
                     send_unicode_hex_string("0028 256F 00B0 25A1 00B0 0029 256F FE35 0020 253B 2501 253B");
                 }
+            }
+            return false;
+        case WIDETXT:
+            if (record->event.pressed) {
+                w_i_d_e_t_e_x_t.on = !w_i_d_e_t_e_x_t.on;
+                w_i_d_e_t_e_x_t.first = true;
             }
             return false;
         default:
