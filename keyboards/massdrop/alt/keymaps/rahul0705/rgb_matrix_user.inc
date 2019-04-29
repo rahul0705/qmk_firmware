@@ -8,7 +8,7 @@ static bool double_rainbow(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
     HSV hsv = { 0, rgb_matrix_config.sat, rgb_matrix_config.val };
     uint8_t key_time = scale16by8(g_rgb_counters.tick, rgb_matrix_config.speed / 4 );
-    uint8_t underglow_time = scale16by8(g_rgb_counters.tick, rgb_matrix_config.speed * 2 );
+    uint8_t underglow_time = scale16by8(g_rgb_counters.tick, rgb_matrix_config.speed );
     for (uint8_t i = led_min; i < led_max; i++) {
         rgb_led led = g_rgb_leds[i];
         point_t point = led.point;
