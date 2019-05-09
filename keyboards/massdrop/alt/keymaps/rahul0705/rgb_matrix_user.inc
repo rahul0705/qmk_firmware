@@ -4,20 +4,22 @@ RGB_MATRIX_EFFECT(double_rainbow)
 
 #include "rgb_matrix.h"
 
+extern led_config_t g_led_config;
+
 static bool double_rainbow(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
     HSV hsv = { 0, rgb_matrix_config.sat, rgb_matrix_config.val };
     uint8_t key_val = scale16by8(g_rgb_counters.tick, rgb_matrix_config.speed / 4 );
-    uint8_t underglow_val = scale16by8(g_rgb_counters.tick, rgb_matrix_config.speed / 2);
+    uint8_t underglow_val = scale16by8(g_rgb_counters.tick, rgb_matrix_config.speed / 4);
     for (uint8_t i = led_min; i < led_max; i++) {
-        rgb_led led = g_rgb_leds[i];
-        point_t point = led.point;
-        if (led.matrix_co.raw != 0xFF) {
+        if (HAS_ANY_FLAGS(g_led_config.flags[i], (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER))) {
             // Keys, so go up/down
-            hsv.h = point.y - key_val;
-        } else {
+            hsv.h = key_val - g_led_config.point[i].y;
+        } else if (HAS_FLAGS(g_led_config.flags[i], LED_FLAG_UNDERGLOW)) {
             // Underglow, cycle through colors
             hsv.h = underglow_val;
+        } else {
+            hsv.h = 0;
         }
         RGB rgb = hsv_to_rgb(hsv);
         rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
