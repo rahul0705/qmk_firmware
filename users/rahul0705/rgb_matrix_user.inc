@@ -1,4 +1,4 @@
-RGB_MATRIX_EFFECT(double_rainbow)
+RGB_MATRIX_EFFECT(up_down)
 
 #ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
@@ -6,7 +6,7 @@ RGB_MATRIX_EFFECT(double_rainbow)
 
 extern led_config_t g_led_config;
 
-static bool double_rainbow(effect_params_t* params) {
+static bool up_down(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
     HSV hsv = { 0, rgb_matrix_config.sat, rgb_matrix_config.val };
     uint8_t key_val = scale16by8(g_rgb_counters.tick, rgb_matrix_config.speed / 4 );
