@@ -8,6 +8,7 @@
 
 enum custom_layers {
     _BASE = 0,
+    _GAME,
     _FUNC,
     _EMJI,
 };
