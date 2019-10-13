@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "rahul0705.h"
 
-#define TG_NKRO MAGIC_TOGGLE_NKRO //Toggle 6KRO / NKRO mode
+#define TG_NKRO MAGIC_TOGGLE_NKRO // Toggle 6KRO / NKRO mode
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Base Layer
@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |      |      | | Play | Stop | VolU |
  * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
- * |      | L_SPI| L_BRI| L_SPD|      |      |      |   ?  |   ?  |      |      |      |      | EMJI | | Prev | Next | VolD |
+ * |      | L_SPD| L_BRI| L_SPI|      |      |      |   ?  |   ?  |      |      |      |      | EMJI | | Prev | Next | VolD |
  * |------+------+------+------+------+-------------+------+------+------+------+------+------+------+ +------+------+------|
  * |      |L_MODP| L_DIM|L_MODN|      | GAME |      |      |      |      |      |      |             |                      |
  * |------+------+------+------+------+------|------+------+------+------+------+------+-------------+        +------+      |
@@ -126,7 +126,90 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS,                            KC_TRNS,                            KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS \
     ),
     */
+/* LED Map
+ * ,------------------------------------------------------------------------------------------------------------------------.
+ * |   0  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |  10  |  11  |  12  |        |  13  |  14  |  15  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------+------+        +------+------+------|
+ * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
+ * |  16  |  17  |  18  |  19  |  20  |  21  |  22  |  23  |  24  |  25  |  26  |  27  |  28  |  29  | |  30  |  31  |  32  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
+ * |  33  |  34  |  35  |  36  |  37  |  38  |  39  |  40  |  41  |  42  |  43  |  44  |  45  |  46  | |  47  |  48  |  49  |
+ * |------+------+------+------+------+-------------+------+------+------+------+------+------+------+ +------+------+------|
+ * |  50  |  51  |  52  |  53  |  54  |  55  |  56  |  57  |  58  |  59  |  60  |  61  |     62      |                      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------+-------------+        +------+      |
+ * |  63  |  64  |  65  |  66  |  67  |  68  |  69  |  70  |  71  |  72  |  73  |         74         |        |  75  |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
+ * |  76  |  77  |  78  |                       79                       |  80  |  81  |  82  |  83  | |  84  |  85  |  86  |
+ * `------------------------------------------------------------------------------------------------------------------------'
+ */
 };
+
+
+void rgb_matrix_indicators_user(void) {
+    if (!g_suspend_state && rgb_matrix_config.enable) {
+        switch (biton32(layer_state)) {
+            case _FUNC:
+		// G - Game Layer
+                rgb_matrix_set_color(55, 0xFF, 0xFF, 0xFF);
+		// \ - EMOJI Layer
+                rgb_matrix_set_color(46, 0xFF, 0xFF, 0xFF);
+
+		// Insert - Play
+                rgb_matrix_set_color(30, 0xFF, 0xFF, 0xFF);
+		// Home - Stop
+                rgb_matrix_set_color(31, 0xFF, 0xFF, 0xFF);
+		// End - Next
+                rgb_matrix_set_color(48, 0xFF, 0xFF, 0xFF);
+		// Delete - Previous
+                rgb_matrix_set_color(47, 0xFF, 0xFF, 0xFF);
+
+		// Print - Mute
+                rgb_matrix_set_color(13, 0xFF, 0x00, 0x00);
+		// Page Up - Volume Up
+                rgb_matrix_set_color(32, 0x00, 0xFF, 0x00);
+		// Page Down - Volume Down
+                rgb_matrix_set_color(49, 0xFF, 0xFF, 0x00);
+
+		// D - RGB Next Mode
+                rgb_matrix_set_color(53, 0xFF, 0xFF, 0xFF);
+		// A - RGB Previous Mode
+                rgb_matrix_set_color(51, 0xFF, 0xFF, 0xFF);
+
+		// E - RGB Speed Increase
+                rgb_matrix_set_color(36, 0x00, 0xFF, 0x00);
+		// Q - RGB Speed Decrease
+                rgb_matrix_set_color(34, 0xFF, 0xFF, 0x00);
+
+		// Right - RGB Hue Increase
+                rgb_matrix_set_color(86, 0xFF, 0xFF, 0xFF);
+		// Left - RGB Hue Decrease
+                rgb_matrix_set_color(84, 0xFF, 0xFF, 0xFF);
+
+		// Up - RGB Saturation Increase
+                rgb_matrix_set_color(75, 0xFF, 0xFF, 0xFF);
+		// Down - RGB Saturation Decrease
+                rgb_matrix_set_color(85, 0xFF, 0xFF, 0xFF);
+
+		// W - RGB Value Increase
+                rgb_matrix_set_color(35, 0xFF, 0xFF, 0xFF);
+		// S - RGB Value Decrease
+                rgb_matrix_set_color(52, 0xFF, 0xFF, 0xFF);
+
+		// Z - RGB Toggle
+                rgb_matrix_set_color(64, 0x00, 0x00, 0x00);
+
+		// B - Boot
+                rgb_matrix_set_color(68, 0xFF, 0xFF, 0xFF);
+
+		// N - N Key Roll Over
+                rgb_matrix_set_color(69, 0xFF, 0xFF, 0xFF);
+
+		// Escape - RAHUL
+                rgb_matrix_set_color(0, 0xFF, 0xFF, 0xFF);
+                break;
+        }
+    }
+}
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     static uint32_t key_timer;
@@ -172,6 +255,6 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         default:
-            return true; //Process all other keycodes normally
+            return true; // Process all other keycodes normally
     }
 }
