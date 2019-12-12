@@ -2,14 +2,14 @@ RGB_MATRIX_EFFECT(up_down)
 
 #ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-#include "rgb_matrix.h"
+#    include "rgb_matrix.h"
 
 extern led_config_t g_led_config;
 
 static bool up_down(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
-    HSV hsv = rgb_matrix_config.hsv;
-    uint8_t key_val = scale16by8(g_rgb_counters.tick, rgb_matrix_config.speed / 4 );
+    HSV     hsv           = rgb_matrix_config.hsv;
+    uint8_t key_val       = scale16by8(g_rgb_counters.tick, rgb_matrix_config.speed / 4);
     uint8_t underglow_val = scale16by8(g_rgb_counters.tick, rgb_matrix_config.speed / 4);
     for (uint8_t i = led_min; i < led_max; i++) {
         if (HAS_ANY_FLAGS(g_led_config.flags[i], (LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER))) {
@@ -26,4 +26,4 @@ static bool up_down(effect_params_t* params) {
     }
     return led_max < DRIVER_LED_TOTAL;
 }
-#endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
+#endif  // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
