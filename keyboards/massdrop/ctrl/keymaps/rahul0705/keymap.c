@@ -81,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |      |      |      |      |      |      |      |      |      |      |      |      |      |        |      |      |      |
      * |------+------+------+------+------+------+------+------+------+------+------+------+------+        +------+------+------|
      * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
-     * |      |      |      |      |      |      |      |      |      |      |      |      |      |      | |      |      |      |
+     * |      | ANGRY|      |      |      |      |      |      |      |      |      |      |      |      | |      |      |      |
      * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+ +------+------+------|
      * |      |      |      |      |      |      |      |      |      |      |      |      |      |      | |      |      |      |
      * |------+------+------+------+------+-------------+------+------+------+------+------+------+------+ +------+------+------|
@@ -93,8 +93,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `------------------------------------------------------------------------------------------------------------------------'
      */
     [_EMJI] = LAYOUT(  // clang-format off
-        KC_TRNS,  ANGRY,    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,              KC_TRNS,  KC_TRNS,  KC_TRNS, \
-        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,    KC_TRNS,  KC_TRNS,  KC_TRNS, \
+        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,              KC_TRNS,  KC_TRNS,  KC_TRNS, \
+        KC_TRNS,  ANGRY,    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,    KC_TRNS,  KC_TRNS,  KC_TRNS, \
         KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,    KC_TRNS,  KC_TRNS,  KC_TRNS, \
         KC_TRNS,  KC_TRNS,  X(POO),   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  \
         KC_LSFT,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  TG_NKRO,  KC_TRNS,  KC_TRNS,  KC_TRNS,  SHRUG,    KC_RSFT,                                  KC_TRNS,  \

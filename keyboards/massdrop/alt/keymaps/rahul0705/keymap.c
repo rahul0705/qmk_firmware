@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------|------+------+------+------+------+------+--------------------|
      * | Shift|      |      |      |      |      |      |      |      |      | SHRUG|    Shift    |      |      |
      * |------+------+------+------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      | E_WIN|      |                     WIDETXT                    |      | FUNC |      |      |      |
+     * | E_MAC| E_WIN|      |                     WIDETXT                    |      | FUNC |      |      |      |
      * `--------------------------------------------------------------------------------------------------------'
      */
     [_EMJI] = LAYOUT(  // clang-format off
@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS, \
         KC_TRNS,  KC_TRNS,  X(POO),   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS, \
         KC_LSFT,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  SHRUG,    KC_RSFT,            KC_TRNS,  KC_TRNS, \
-        KC_TRNS,  UC_M_WC,  KC_TRNS,                                WIDETXT,                                KC_TRNS,  MO(_FUNC),KC_TRNS,  KC_TRNS,  KC_TRNS  // clang-format on
+        UC_M_OS,  UC_M_WC,  KC_TRNS,                                WIDETXT,                                KC_TRNS,  MO(_FUNC),KC_TRNS,  KC_TRNS,  KC_TRNS  // clang-format on
         ),
     /* Layer N
      * ,--------------------------------------------------------------------------------------------------------.
