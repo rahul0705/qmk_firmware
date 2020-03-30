@@ -7,6 +7,7 @@ enum custom_layers {
     _GAME,
     _FUNC,
     _EMJI,
+    _KEYMAP_LAYER_SAFE_RANGE,
 };
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
