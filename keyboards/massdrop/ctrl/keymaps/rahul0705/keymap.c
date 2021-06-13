@@ -145,7 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 void rgb_matrix_indicators_user(void) {
-    if (!g_suspend_state && rgb_matrix_config.enable) {
+    if (!rgb_matrix_get_suspend_state() && rgb_matrix_config.enable) {
         switch (biton32(layer_state)) {
             case _FUNC:
                 // G - Game Layer
